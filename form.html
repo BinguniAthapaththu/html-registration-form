@@ -1,0 +1,258 @@
+<html>
+
+	<head>
+		<title>Registration Form</title>
+	   <link href="styles.css" type="text/css" rel="stylesheet"/>
+	   <style type="text/css">
+	    p{
+		border:2px solid #f0f0f0;
+		border-radius:4px;
+		padding:6px;
+		width:100%;
+		background-color:white;
+		color:black;
+		height:34px;
+		}
+	   </style>
+	   
+	   <script type="text/javascript">
+		
+		function validateForm(){
+			
+			var firstname= document.forms["registration"]["firstname"].value;
+			var lastname= document.forms["registration"]["lastname"].value;
+			var birth_date= document.forms["registration"]["birth_date"].value;
+			var email= document.forms["registration"]["email"].value;
+			var username= document.forms["registration"]["username"].value;
+			var password= document.forms["registration"]["password"].value;
+			var confirm_password= document.forms["registration"]["confirm_password"].value;
+			
+			
+			var lerror=document.getElementById('lerror');
+			var e_error=document.getElementById('e_error');
+			var uerror=document.getElementById('uerror');
+			var perror=document.getElementById('perror');
+			var cerror=document.getElementById('cerror');
+			
+			var mailformat = /^[a-z]+[0-9]+@\S+\.\S+/;
+			var usernameformat= /^[a-z]+$/;
+			var passwordformat= /^(?=.*[0-9])[a-zA-Z0-9]{6,15}$/;
+			
+			if (firstname==0)
+			{ 
+			ferror.textContent="First name is required";
+			}
+			if (firstname!="") {
+				ferror.textContent="";
+
+			}
+			{
+			if(firstname.length > 30)
+			{
+			ferror.textContent="Enter maximum 30 characters";
+			}
+			}
+			
+			if (lastname==0)
+			{ 
+			lerror.textContent="Last name is required";
+			}
+			if (lastname!="")
+			{
+				lerror.textContent="";
+			}
+			if(lastname.length > 30)
+			{
+			lerror.textContent="Enter maximum 30 characters";
+			}
+		
+			
+			if (birth_date==0)
+			{ 
+			berror.textContent="Birth date is required";
+			}
+			if(birth_date!="")
+			{
+				berror.textContent="";
+
+			}
+			
+			if (email==0)
+			{ 
+			e_error.textContent="Email address is required";
+			}
+			else{
+			if(!email.match(mailformat))
+			{
+			e_error.textContent="Invalid email";
+			}
+			else
+			{
+			e_error.textContent="";
+			}
+			}
+			
+			if (username==0)
+			{ 
+			uerror.textContent="Username is required";
+			}
+			else{
+			if(username!="")
+			{
+				uerror.textContent="";
+			}
+			if ((username.length > 10)||(!username.match(usernameformat)))
+			{
+			 uerror.textContent="Username must be 1-10 lower letters ";
+			}
+			}
+			
+			
+			
+			if (password==0)
+			{ 
+			perror.textContent="Please enter a password";
+			}
+			else{
+			if(password!="")
+			{
+				perror.textContent="";
+			}
+			if(((password.length<6)&& (password.length>15))||(!password.match(passwordformat)))
+			{
+				perror.textContent="Password must be 6-15 letters and numbers";
+			}
+			}
+			
+			if (confirm_password==0)
+			{ 
+			cerror.textContent="Please confirm your password";
+			}
+			else{
+			if(confirm_password!=password)
+			{
+			cerror.textContent="Password mismatch";
+			}
+			else
+			{
+			cerror.textContent="";
+			}
+			}
+			
+			if((firstname==0)||(firstname.length > 30)||(lastname==0)||(lastname.length > 30)||(birth_date==0)||(email==0)||(username==0)||(confirm_password==0)||
+			(confirm_password!=password)||(password==0)||(!email.match(mailformat))||((username.length > 10)||(!username.match(usernameformat)))||
+			(((password.length<6)&& (password.length>15))||(!password.match(passwordformat))))
+			return false;
+			
+			}
+			
+		function calculate_age()
+            { 
+			var birth_date = new Date(document.getElementById("birth_date").value);
+		    var birth_date_day = birth_date.getDate();
+			var birth_date_month = birth_date.getMonth();
+			var birth_date_year = birth_date.getFullYear();
+			 
+			var today_date = new Date();
+			var today_day = today_date.getDate();
+			var today_month = today_date.getMonth();
+			var today_year = today_date.getFullYear();
+			 
+			var calculated_age=0;
+					 
+			if(today_month>birth_date_month) calculated_age = today_year - birth_date_year;
+			else calculated_age=today_year - birth_date_year -1;
+					 
+			var output_value = calculated_age;
+			document.getElementById("calculated_age").innerHTML=calculated_age;
+			}		
+			
+			function goahead(){
+			if(document.getElementById("check").checked == true)
+			document.getElementById("btnsubmit").disabled = false;
+			else
+			document.getElementById("btnsubmit").disabled = true;
+			}
+
+
+	   </script>
+	   
+	</head>
+
+
+	<body class="content">
+	
+		
+		
+		
+		    <br>
+			<form class="box1"name="registration"  onsubmit="return validateForm()">
+			
+			<h2 style="text-align:center;padding-top:20px">Create an account</h2><br>
+			
+			<div class="form-con">
+			<label>First Name</label><br>
+			<input type="text" name="firstname" />
+			<div id="ferror"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Last Name</label><br>
+			<input type="text" name="lastname" />
+			<div id="lerror"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Birth Date</label><br>
+			 <input type="text" id="birth_date" placeholder="YYYY-MM-DD" name="birth_date" onkeyup="calculate_age()">
+			 <div id="berror"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Age</label><br><p id="calculated_age"></p><br>
+			</div>
+			
+			
+			<div class="form-con">
+			<label>Address</label><br>
+			<input type="text" name="address"/>
+			</div>
+			
+			<div class="form-con">
+			<label>Email</label><br>
+			<input type="text" name="email"/>
+			<div id="e_error"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Username</label><br>
+			<input type="text" name="username"/>
+			<div id="uerror"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Password</label><br>
+			<input type="password" name="password"/>
+			<div id="perror"></div>
+			</div>
+			
+			<div class="form-con">
+			<label>Confirm password</label><br>
+			<input type="password" name="confirm_password"/>
+			<div id="cerror"></div>
+			</div>
+			
+			
+			<input style="margin-bottom:15px;margin-left:25px" type="checkbox" id="check" onclick="goahead()"/> I agree with the terms and condition
+			
+			
+			<div>
+			<input  id="btnsubmit"class="sbutton" type="submit" value="Register" disabled/>
+			</div>
+			
+			
+		
+	
+	</body>
+	
+</html>
